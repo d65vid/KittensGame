@@ -681,13 +681,13 @@ var runAllAutomation = setInterval(function() {
 	autoNip();
 	autoPraise();
 	autoBuild();
+	energyControl();
 	
 	if (gamePage.timer.ticksTotal % 3 === 0) {
 		autoObserve();
 		autoCraft();
 		autoHunt();
 		autoAssign();
-		energyControl();
 	}
 	
 	if (gamePage.timer.ticksTotal % 10 === 0) {
