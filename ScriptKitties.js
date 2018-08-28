@@ -703,4 +703,4 @@ var runAllAutomation = setInterval(function() {
 		
 	}
 
-}, 200);
+}, 20);
