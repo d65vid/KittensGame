@@ -629,21 +629,23 @@ function autoAssign() {
 function energyControl() {
 	if (autoCheck[9] != "false") {
 		proVar = gamePage.resPool.energyProd; 
-		conVar = gamePage.resPool.energyCons;		
+		conVar = gamePage.resPool.energyCons;
 		
-			if (bldAccelerator.val > bldAccelerator.on && proVar > (conVar + 3)) {
+		floatableEnergy = 10
+		
+			if (bldAccelerator.val > bldAccelerator.on && proVar > (conVar + floatableEnergy)) {
 				bldAccelerator.on++;
 				conVar++;
-			} else if (bldCalciner.val > bldCalciner.on && proVar > (conVar + 3)) {
+			} else if (bldCalciner.val > bldCalciner.on && proVar > (conVar + floatableEnergy)) {
 				bldCalciner.on++;
 				conVar++;
-			} else if (bldFactory.val > bldFactory.on && proVar > (conVar + 3)) {
+			} else if (bldFactory.val > bldFactory.on && proVar > (conVar + floatableEnergy)) {
 				bldFactory.on++;
 				conVar++;
-			} else if (bldOilWell.val > bldOilWell.on && proVar > (conVar + 3)) {
+			} else if (bldOilWell.val > bldOilWell.on && proVar > (conVar + floatableEnergy)) {
 				bldOilWell.on++;
 				conVar++;
-			} else if (bldBioLab.val > bldBioLab.on && proVar > (conVar + 3)) {
+			} else if (bldBioLab.val > bldBioLab.on && proVar > (conVar + floatableEnergy)) {
 				bldBioLab.on++;
 				conVar++;
 			} else if (bldBioLab.on > 0 && proVar < conVar) {
