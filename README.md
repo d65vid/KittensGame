@@ -1,3 +1,8 @@
+### TODO
+* more space buildings
+* better crafting controls
+* auto time stuff
+
 # ScriptKitties
 A script to automate playing the addicting <a href="http://bloodrizer.ru/games/kittens/#">Kittens Game</a>
 
