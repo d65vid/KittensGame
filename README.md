@@ -1,7 +1,10 @@
 ### TODO
+* more energy control
 * more space buildings
 * better crafting controls
 * auto time stuff
+* auto blackcoin stuff?
+* auto ai core
 
 # ScriptKitties
 A script to automate playing the addicting <a href="http://bloodrizer.ru/games/kittens/#">Kittens Game</a>
