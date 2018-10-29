@@ -9,6 +9,8 @@ var bldOilWell = gamePage.bld.buildingsData[20];
 var bldFactory = gamePage.bld.buildingsData[22];
 var bldCalciner = gamePage.bld.buildingsData[16];
 var bldAccelerator = gamePage.bld.buildingsData[24];
+var bldSpaceStation = gamePage.space.getBuilding("spaceStation")
+var bldOrbitalArray = gamePage.space.getBuilding("orbitalArray")
 
  // These are the assorted variables
 var proVar = gamePage.resPool.energyProd; 
@@ -633,7 +635,10 @@ function energyControl() {
 		
 		floatableEnergy = 10
 		
-			if (bldAccelerator.val > bldAccelerator.on && proVar > (conVar + floatableEnergy)) {
+			if (bldOrbitalArray.val > bldOrbitalArray.on && proVar > (conVar + floatableEnergy)) {
+				bldOrbitalArray.on++;
+				conVar++;
+			} else if (bldAccelerator.val > bldAccelerator.on && proVar > (conVar + floatableEnergy)) {
 				bldAccelerator.on++;
 				conVar++;
 			} else if (bldCalciner.val > bldCalciner.on && proVar > (conVar + floatableEnergy)) {
@@ -648,6 +653,12 @@ function energyControl() {
 			} else if (bldBioLab.val > bldBioLab.on && proVar > (conVar + floatableEnergy)) {
 				bldBioLab.on++;
 				conVar++;
+			} else if (bldSpaceStation.val > bldSpaceStation.on && proVar > (conVar + floatableEnergy)) {
+				bldSpaceStation.on++;
+				conVar++;
+			} else if (bldSpaceStation.on > 0 && proVar < conVar) {
+				bldSpaceStation.on--;
+				conVar--;
 			} else if (bldBioLab.on > 0 && proVar < conVar) {
 				bldBioLab.on--;
 				conVar--;
@@ -663,7 +674,10 @@ function energyControl() {
 			} else if (bldAccelerator.on > 0 && proVar < conVar) {
 				bldAccelerator.on--;
 				conVar--;
-			}		
+			} else if (bldOrbitalArray.on > 0 && proVar < conVar) {
+				bldOrbitalArray.on--;
+				conVar--;
+			}
 	}
 }
 
