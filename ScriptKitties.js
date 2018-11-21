@@ -74,7 +74,11 @@ var buildings = [
 		["Space Beacon", false, 6],
 		["Terraforming Station", false, 7],
 		["Hydroponics", false, 7],
-		["Tectonic", false, 8]
+		["Tectonic", false, 10],
+		["Heatsink", false, 4],
+		["Sunforge", false, 4],
+		["HR Harvester", false, 8],
+		["Entanglement Station", false, 9]
 		];	
 		
 var buildingsList = [
@@ -126,7 +130,11 @@ var buildingsList = [
 		["spaceBeacon"],
 		["terraformingStation"],
 		["hydroponics"],
-		["tectonic"]
+		["tectonic"],
+		["heatsink"],
+		["sunforge"],
+		["hrHarvester"],
+		["entanglementStation"]
 		];	
 		
 var resources = [
@@ -628,6 +636,91 @@ function autoAssign() {
 }
 
 		// Control Energy Consumption
+
+var autoTempus() {
+	if (autoCheck[something]) { // TODO - make this do the right thing
+		if (!game.time.isAccelerated && game.resPool.get("temporalFlux") > 0) { // TODO - add minimum?
+			game.time.isAccelerated = true
+		}
+	}
+}
+var autoShatterTC() {
+	if (autoCheck[something]) { // TODO - make this do the right thing
+		// Do we have positive energy?
+		nrgAvail = gamePage.resPool.energyCons - gamePage.resPool.energyProd
+		// Do we have enough time crystals?
+		haveTCs = gamePage.resPool.get("timeCrystal").value > 100 // TODO - make minimum required TC settable?
+		// Do we have enough heat capacity?
+		chronoforge = gamePage.time.getCFU("blastFurnace")
+		underheated = ((chronoforge.effects.heatMax * chronoforge.on) - gamePage.time.heat) > 500 // TODO - make minimum required heat settable?
+		// Should we shatter?
+		if (nrgAvail && haveTCs && underheated) {
+			// Shatter!
+			gamePage.tabs[7].children[2].children[0].children[0].x100.link.click()
+		}
+
+
+
+		gamePage.resPool.get("timeCrystal")//.value
+		gamePage.time.heat // current heat
+		gamePage.time.getCFU("blastFurnace").effects.heatMax * gamePage.time.getCFU("blastFurnace").on // available heat
+		// if TC > 100 && energy > 0 && heatAvailable < 500
+
+	}
+}
+
+var nrgBlds = [ // In order of disable-first to disable-last AKA enable-last to enable-first
+	gamePage.space.getBuilding("spaceStation"), // Space Station
+	gamePage.bld.buildingsData[9], 				// BioLab
+	gamePage.bld.buildingsData[20], 			// OilWell
+	gamePage.bld.buildingsData[16], 			// Calciner
+	gamePage.bld.buildingsData[22], 			// Factory
+	gamePage.bld.buildingsData[24], 			// Accelerator
+	gamePage.space.getBuilding("orbitalArray")  // Orbital Array
+]
+function adifferentenergyControl() {
+	if (autoCheck[9] != "false") { // TODO - can this just be autoCheck[9]?
+		nrgProd = gamePage.resPool.energyProd
+		nrgCons = gamePage.resPool.energyCons
+
+		// Calculate floatable energy
+		var floatableEnergy = 100
+		for (var i = 0; i < nrgBlds.length; i++) {
+			var nrgBld = nrgBlds[i]
+			if (nrgBld.on) {
+				floatableEnergy = Math.min(floatableEnergy, nrgBld.effects.energyConsumption)
+			}
+		}
+
+		if (nrgCons > nrgProd) {
+			// Consuming more than producing, turn stuff off
+			for (var i = 0; i < nrgBlds.length; i++) {
+				var nrgBld = nrgBlds[i]
+				if (nrgBld.on > 0) { // TODO - can this just be if(nrgBld.on)?
+					// There are buildings to turn off
+					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
+						// Turning off this building would not immediately fix the problem
+						nrgBld.on--
+						break
+					}
+				}
+			}
+		} else {
+			// Producing more than consuming, turn stuff on
+			for (var i = nrgBlds.length - 1; i >= 0; i--) {
+				var nrgBld = nrgBlds[i]
+				if (nrgBld.val > nrgBld.on) {
+					// There are buildings to turn on
+					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
+						// Turning on this building would not immediately fix the problem
+						nrgBld.on++
+						break
+					}
+				}
+			}
+		}
+	}
+}
 function energyControl() {
 	if (autoCheck[9] != "false") {
 		proVar = gamePage.resPool.energyProd; 
@@ -698,6 +791,7 @@ var runAllAutomation = setInterval(function() {
 	autoPraise();
 	autoBuild();
 	energyControl();
+	autoShatterTC()
 	
 	if (gamePage.timer.ticksTotal % 3 === 0) {
 		autoObserve();
