@@ -637,14 +637,14 @@ function autoAssign() {
 
 		// Control Energy Consumption
 
-var autoTempus() {
+function autoTempus() {
 	if (autoCheck[something]) { // TODO - make this do the right thing
 		if (!game.time.isAccelerated && game.resPool.get("temporalFlux") > 0) { // TODO - add minimum?
 			game.time.isAccelerated = true
 		}
 	}
 }
-var autoShatterTC() {
+function autoShatterTC() {
 	if (true) { //(autoCheck[something]) { // TODO - make this do the right thing
 		// Do we have positive energy?
 		nrgAvail = gamePage.resPool.energyCons - gamePage.resPool.energyProd
