@@ -637,13 +637,13 @@ function autoAssign() {
 
 		// Control Energy Consumption
 
-function autoTempus() {
-	if (autoCheck[something]) { // TODO - make this do the right thing
-		if (!game.time.isAccelerated && game.resPool.get("temporalFlux") > 0) { // TODO - add minimum?
-			game.time.isAccelerated = true
-		}
-	}
-}
+// function autoTempus() {
+// 	if (autoCheck[something]) { // TODO - make this do the right thing
+// 		if (!game.time.isAccelerated && game.resPool.get("temporalFlux") > 0) { // TODO - add minimum?
+// 			game.time.isAccelerated = true
+// 		}
+// 	}
+// }
 function autoShatterTC() {
 	if (true) { //(autoCheck[something]) { // TODO - make this do the right thing
 		// Do we have positive energy?
@@ -668,58 +668,58 @@ function autoShatterTC() {
 	}
 }
 
-var nrgBlds = [ // In order of disable-first to disable-last AKA enable-last to enable-first
-	gamePage.space.getBuilding("spaceStation"), // Space Station
-	gamePage.bld.buildingsData[9], 				// BioLab
-	gamePage.bld.buildingsData[20], 			// OilWell
-	gamePage.bld.buildingsData[16], 			// Calciner
-	gamePage.bld.buildingsData[22], 			// Factory
-	gamePage.bld.buildingsData[24], 			// Accelerator
-	gamePage.space.getBuilding("orbitalArray")  // Orbital Array
-]
-function adifferentenergyControl() {
-	if (autoCheck[9] != "false") { // TODO - can this just be autoCheck[9]?
-		nrgProd = gamePage.resPool.energyProd
-		nrgCons = gamePage.resPool.energyCons
+// var nrgBlds = [ // In order of disable-first to disable-last AKA enable-last to enable-first
+// 	gamePage.space.getBuilding("spaceStation"), // Space Station
+// 	gamePage.bld.buildingsData[9], 				// BioLab
+// 	gamePage.bld.buildingsData[20], 			// OilWell
+// 	gamePage.bld.buildingsData[16], 			// Calciner
+// 	gamePage.bld.buildingsData[22], 			// Factory
+// 	gamePage.bld.buildingsData[24], 			// Accelerator
+// 	gamePage.space.getBuilding("orbitalArray")  // Orbital Array
+// ]
+// function adifferentenergyControl() {
+// 	if (autoCheck[9] != "false") { // TODO - can this just be autoCheck[9]?
+// 		nrgProd = gamePage.resPool.energyProd
+// 		nrgCons = gamePage.resPool.energyCons
 
-		// Calculate floatable energy
-		var floatableEnergy = 100
-		for (var i = 0; i < nrgBlds.length; i++) {
-			var nrgBld = nrgBlds[i]
-			if (nrgBld.on) {
-				floatableEnergy = Math.min(floatableEnergy, nrgBld.effects.energyConsumption)
-			}
-		}
+// 		// Calculate floatable energy
+// 		var floatableEnergy = 100
+// 		for (var i = 0; i < nrgBlds.length; i++) {
+// 			var nrgBld = nrgBlds[i]
+// 			if (nrgBld.on) {
+// 				floatableEnergy = Math.min(floatableEnergy, nrgBld.effects.energyConsumption)
+// 			}
+// 		}
 
-		if (nrgCons > nrgProd) {
-			// Consuming more than producing, turn stuff off
-			for (var i = 0; i < nrgBlds.length; i++) {
-				var nrgBld = nrgBlds[i]
-				if (nrgBld.on > 0) { // TODO - can this just be if(nrgBld.on)?
-					// There are buildings to turn off
-					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
-						// Turning off this building would not immediately fix the problem
-						nrgBld.on--
-						break
-					}
-				}
-			}
-		} else {
-			// Producing more than consuming, turn stuff on
-			for (var i = nrgBlds.length - 1; i >= 0; i--) {
-				var nrgBld = nrgBlds[i]
-				if (nrgBld.val > nrgBld.on) {
-					// There are buildings to turn on
-					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
-						// Turning on this building would not immediately fix the problem
-						nrgBld.on++
-						break
-					}
-				}
-			}
-		}
-	}
-}
+// 		if (nrgCons > nrgProd) {
+// 			// Consuming more than producing, turn stuff off
+// 			for (var i = 0; i < nrgBlds.length; i++) {
+// 				var nrgBld = nrgBlds[i]
+// 				if (nrgBld.on > 0) { // TODO - can this just be if(nrgBld.on)?
+// 					// There are buildings to turn off
+// 					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
+// 						// Turning off this building would not immediately fix the problem
+// 						nrgBld.on--
+// 						break
+// 					}
+// 				}
+// 			}
+// 		} else {
+// 			// Producing more than consuming, turn stuff on
+// 			for (var i = nrgBlds.length - 1; i >= 0; i--) {
+// 				var nrgBld = nrgBlds[i]
+// 				if (nrgBld.val > nrgBld.on) {
+// 					// There are buildings to turn on
+// 					if (nrgBld.effects.energyConsumption < Math.abs(nrgCons - nrgProd)) {
+// 						// Turning on this building would not immediately fix the problem
+// 						nrgBld.on++
+// 						break
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 function energyControl() {
 	if (autoCheck[9] != "false") {
 		proVar = gamePage.resPool.energyProd; 
