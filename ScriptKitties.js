@@ -645,7 +645,7 @@ var autoTempus() {
 	}
 }
 var autoShatterTC() {
-	if (autoCheck[something]) { // TODO - make this do the right thing
+	if (true) { //(autoCheck[something]) { // TODO - make this do the right thing
 		// Do we have positive energy?
 		nrgAvail = gamePage.resPool.energyCons - gamePage.resPool.energyProd
 		// Do we have enough time crystals?
@@ -661,11 +661,10 @@ var autoShatterTC() {
 
 
 
-		gamePage.resPool.get("timeCrystal")//.value
-		gamePage.time.heat // current heat
-		gamePage.time.getCFU("blastFurnace").effects.heatMax * gamePage.time.getCFU("blastFurnace").on // available heat
+		// gamePage.resPool.get("timeCrystal")//.value
+		// gamePage.time.heat // current heat
+		// gamePage.time.getCFU("blastFurnace").effects.heatMax * gamePage.time.getCFU("blastFurnace").on // available heat
 		// if TC > 100 && energy > 0 && heatAvailable < 500
-
 	}
 }
 
