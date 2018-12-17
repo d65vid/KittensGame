@@ -7,6 +7,7 @@
 * auto ai core
 * auto feed elders?
 * make the options ui better (use tooltipExt style instead of dialog for one, probably just turn it into a table for another)
+* energy consumption calculator (for like season-based multipliers and stuff)
 
 # ScriptKitties
 A script to automate playing the addicting <a href="http://bloodrizer.ru/games/kittens/#">Kittens Game</a>
